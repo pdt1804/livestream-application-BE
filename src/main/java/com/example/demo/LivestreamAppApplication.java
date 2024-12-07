@@ -20,7 +20,8 @@ public class LivestreamAppApplication {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedOrigins("https://3523-171-243-48-1.ngrok-free.app")
+                        .allowedOrigins("http://localhost:3000")
+//                        .allowedOrigins("https://3523-171-243-48-1.ngrok-free.app")
                         .allowedHeaders("*");
             }
         };
