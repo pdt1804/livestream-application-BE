@@ -4,16 +4,17 @@ public class AnswerAndCandidate {
 	private String livestreamUserName;
 	private String answer;
 	private String candidate;
-;
+	private String viewerName;
 	
 	public AnswerAndCandidate() {
 
 	}
 
-	public AnswerAndCandidate(String livestreamUserName, String answer, String candidate) {
+	public AnswerAndCandidate(String livestreamUserName, String answer, String candidate, String viewerName) {
 		this.livestreamUserName = livestreamUserName;
 		this.answer = answer;
 		this.candidate = candidate;
+		this.viewerName = viewerName;
 	}
 
 	public String getLivestreamUserName() {
@@ -28,4 +29,7 @@ public class AnswerAndCandidate {
 		return candidate;
 	}
 	
+	public String getViewerName() {
+		return viewerName;
+	}
 }

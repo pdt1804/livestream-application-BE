@@ -7,8 +7,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.AnswerAndCandidate;
-import com.example.demo.dto.OfferAndCandidate;
-import com.example.demo.dto.RequestData;
+import com.example.demo.dto.Candidate;
+import com.example.demo.dto.Offer;
 
 @RestController
 public class WebrtcController {
@@ -16,15 +16,19 @@ public class WebrtcController {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate; 
     
-    @MessageMapping("/sendOfferAndCandidate")
-    public void sendOfferAndCandidate(@Payload OfferAndCandidate offerAndCandidateData) {
-        simpMessagingTemplate.convertAndSend("/user/" + offerAndCandidateData.getViewerName(), offerAndCandidateData);
+    @MessageMapping("/sendOffer")
+    public void sendOfferAndCandidate(@Payload Offer offer) {
+        simpMessagingTemplate.convertAndSend("/user/" + offer.getViewerName() + "/receiveOffer", offer);
+    }
+    
+    @MessageMapping("/sendCandidate")
+    public void sendOfferAndCandidate(@Payload Candidate candidate) {
+        simpMessagingTemplate.convertAndSend("/user/" + candidate.getViewerName() + "/receiveIceCandidate", candidate);
     }
     
     @MessageMapping("/sendAnswerAndCandidate")
     public void sendAnswerAndCandidate(@Payload AnswerAndCandidate answerAndCandidate) {
-    	System.out.println("askjdhasjkdhsajkdhsakjdhajkh");
-        simpMessagingTemplate.convertAndSend("/user/livestream/receiveAnswerAndCandidate", answerAndCandidate);
+        simpMessagingTemplate.convertAndSend("/user/" + answerAndCandidate.getLivestreamUserName() + "/receiveAnswerAndCandidate", answerAndCandidate);
     }
     
     @MessageMapping("/requestForOffer")
