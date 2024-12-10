@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.AnswerAndCandidate;
 import com.example.demo.dto.Candidate;
+import com.example.demo.dto.Message;
 import com.example.demo.dto.Offer;
+import com.example.demo.dto.UserConnection;
 
 @RestController
 public class WebrtcController {
@@ -26,13 +28,18 @@ public class WebrtcController {
         simpMessagingTemplate.convertAndSend("/user/" + candidate.getViewerName() + "/receiveIceCandidate", candidate);
     }
     
+    @MessageMapping("/sendMessage")
+    public void sendOfferAndCandidate(@Payload Message message) {
+        simpMessagingTemplate.convertAndSend("/user/" + message.getLivestreamUserName() + "/receiveMessage", message);
+    }
+    
     @MessageMapping("/sendAnswerAndCandidate")
     public void sendAnswerAndCandidate(@Payload AnswerAndCandidate answerAndCandidate) {
         simpMessagingTemplate.convertAndSend("/user/" + answerAndCandidate.getLivestreamUserName() + "/receiveAnswerAndCandidate", answerAndCandidate);
     }
     
     @MessageMapping("/requestForOffer")
-    public void sendRequest(@Payload String viewer) {
-        simpMessagingTemplate.convertAndSend("/user/livestream/sendOfferAndCandidate", viewer);
+    public void sendRequest(@Payload UserConnection connection) {
+        simpMessagingTemplate.convertAndSend("/user/" + connection.getLivestreamUserName() + "/sendOfferAndCandidate", connection);
     }
 }
